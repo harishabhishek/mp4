@@ -101,7 +101,7 @@
       (comp-expr-lt (expr1 list-of-expr) (value-of-comp-exp-lt expr1 list-of-expr env))
       (comp-expr-gt (expr1 list-of-expr) (value-of-comp-exp-gt expr1 list-of-expr env));started
       (exp-expr (expr1 list-of-expr) (value-of-exp-expr expr1 list-of-expr env)) ;started
-      (if-then-else-expr (if-expr else-expr then-expr) (if-expr else-expr then-expr env)) ;started
+      (if-then-else-expr (comp-expr if-T-expr if-F-expr) (value-of-if-then-else-expr comp-expr if-T-expr if-F-expr env)) ;started
       (let-expr (list-of-ID list-of-expr in-expr) (value-of-let-exp list-of-ID list-of-expr in-expr env)) ;started
       (letrec-expr (list-of-ID list-of-expr in-expr) (value-of-letrec-exp list-of-ID list-of-expr in-expr env)) ;started
       (proc-expr (list-of-ID expr) (value-of-proc-exp list-of-ID expr env))
@@ -171,8 +171,10 @@
 
 ;;;Handles if-then-else expressions
 (define value-of-if-then-else-expr
-  (lambda (if-expr else-expr then-expr env)
-    (display "do something about if-then-else")
+  (lambda (comp-expr if-T-expr if-F-expr env)
+    (if (value-of-static comp-expr env)
+        (value-of-static if-T-expr env)
+        (value-of-static if-F-expr env))
     ))
 ;(trace value-of-if-then-else-expr)
 
